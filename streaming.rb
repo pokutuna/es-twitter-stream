@@ -39,6 +39,7 @@ EM.run do
       error_count = 0
     rescue => e
       STDERR.puts [Time.now, *e.backtrace].join("\n")
+      p result
       error_count += 1
       break if 5 <= error_count
       next
