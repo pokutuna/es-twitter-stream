@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'em-twitter'
+require 'eventmachine'
 require 'httparty'
 require 'json'
 require 'uri'
@@ -39,9 +40,9 @@ EM.run do
       error_count = 0
     rescue => e
       STDERR.puts [Time.now, *e.backtrace].join("\n")
-      p result
+      STDERR.puts result
       error_count += 1
-      break if 5 <= error_count
+      EM.stop if 5 <= error_count
       next
     end
   end

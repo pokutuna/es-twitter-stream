@@ -21,6 +21,7 @@ PLATFORMS
 
 DEPENDENCIES
   em-twitter
+  eventmachine
   httparty
 
 BUNDLED WITH
