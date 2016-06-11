@@ -24,14 +24,10 @@ set :deploy_to, '/home/deploy/apps/es-twitter-stream'
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, fetch(:linked_files, []).push(
-  'config.yml',
-  'vendor',
-  '.bundle'
-)
+set :linked_files, fetch(:linked_files, []).push('config.yml')
 
 # Default value for linked_dirs is []
-# set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system')
+set :linked_dirs, fetch(:linked_dirs, []).push('vendor', '.bundle')
 
 # Default value for default_env is {}
 set :default_env, { path: "/usr/local/xbuild/ruby-2.3.0/bin:$PATH" }
@@ -65,7 +61,8 @@ end
 
 task :setup do
   on roles(:app) do
+    upload! 'config.yml', "#{shared_path}/config.yml"
+    invoke 'deploy:check:linked_files'
     invoke 'supervisor:setup'
-    upload! 'config.yml', "#{fetch(:shared_path)}/config.yml"
   end
 end
